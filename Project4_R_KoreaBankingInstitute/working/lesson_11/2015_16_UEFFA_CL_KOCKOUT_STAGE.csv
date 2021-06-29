@@ -1,0 +1,68 @@
+Match,Stage,Leg,date,Player,Goals,Club,Nationality
+Wolfsburg-Gent,16강,1차전,2016-02-17,Kumas,1,Gent,벨기에
+Wolfsburg-Gent,16강,1차전,2016-02-17,Coulibaly,1,Gent,말리
+Wolfsburg-Gent,16강,1차전,2016-02-17,Draxler,1,Wolfsburg,독일
+Wolfsburg-Gent,16강,1차전,2016-02-17,Draxler,1,Wolfsburg,독일
+Wolfsburg-Gent,16강,1차전,2016-02-17,Kruse,1,Wolfsburg,독일
+Wolfsburg-Gent,16강,2차전,2016-03-08,Schurrle,1,Wolfsburg,독일
+Real Madrid-Roma,16강,1차전,2016-02-17,Ronaldo,1,Real Madrid,포르투갈
+Real Madrid-Roma,16강,1차전,2016-02-17,Jese,1,Real Madrid,스페인
+Real Madrid-Roma,16강,2차전,2016-03-08,Ronaldo,1,Real Madrid,포르투갈
+Real Madrid-Roma,16강,2차전,2016-03-08,Rodriguez,1,Real Madrid,콜롬비아
+PSG-Chelsea,16강,1차전,2016-02-16,Ibrahimovic,1,Paris Saint-Germain,스웨덴
+PSG-Chelsea,16강,1차전,2016-02-16,Cavani,1,Paris Saint-Germain,우루과이
+PSG-Chelsea,16강,1차전,2016-02-16,Mikel,1,Chelsea,나이지리아
+PSG-Chelsea,16강,2차전,2016-03-09,Rabiot,1,Paris Saint-Germain,프랑스
+PSG-Chelsea,16강,2차전,2016-03-09,Costa,1,Chelsea,스페인
+PSG-Chelsea,16강,2차전,2016-03-09,Ibrahimovic,1,Paris Saint-Germain,스웨덴
+Barcelona-Arsenal,16강,1차전,2016-02-23,Messi,1,Barcelona,아르헨티나
+Barcelona-Arsenal,16강,1차전,2016-02-23,Messi,1,Barcelona,아르헨티나
+Barcelona-Arsenal,16강,2차전,2016-03-16,Neymar,1,Barcelona,브라질
+Barcelona-Arsenal,16강,2차전,2016-03-16,Suarez,1,Barcelona,우루과이
+Barcelona-Arsenal,16강,2차전,2016-03-16,Messi,1,Barcelona,아르헨티나
+Barcelona-Arsenal,16강,2차전,2016-03-16,Elneny,1,Arsenal,이집트
+Bayern-Juventus,16강,1차전,2016-02-23,Dybala,1,Juventus,아르헨티나
+Bayern-Juventus,16강,1차전,2016-02-23,Sturaro,1,Juventus,이탈리아
+Bayern-Juventus,16강,1차전,2016-02-23,Muller,1,Bayern Munich,독일
+Bayern-Juventus,16강,1차전,2016-02-23,Robben,1,Bayern Munich,네덜란드
+Bayern-Juventus,16강,2차전,2016-03-16,Pogba,1,Juventus,프랑스
+Bayern-Juventus,16강,2차전,2016-03-16,Cuadrado,1,Juventus,콜롬비아
+Bayern-Juventus,16강,2차전,2016-03-16,Lewandowski,1,Bayern Munich,폴란드
+Bayern-Juventus,16강,2차전,2016-03-16,Muller,1,Bayern Munich,독일
+Bayern-Juventus,16강,2차전,2016-03-16,Thiago,1,Bayern Munich,스페인
+Bayern-Juventus,16강,2차전,2016-03-16,Coman,1,Bayern Munich,프랑스
+Benfica-Zenit,16강,1차전,2016-02-16,Jonas,1,Benfica,브라질
+Benfica-Zenit,16강,2차전,2016-03-09,Hulk,1,Zenit Saint Petersburg,브라질
+Benfica-Zenit,16강,2차전,2016-03-09,Gaitan,1,Benfica,아르헨티나
+Benfica-Zenit,16강,2차전,2016-03-09,Talisca,1,Benfica,브라질
+Mancity-Dynamo,16강,1차전,2016-02-24,Buyalskyi,1,Dynamo Kyiv,우크라이나
+Mancity-Dynamo,16강,1차전,2016-02-24,Aguero,1,Manchester City,아르헨티나
+Mancity-Dynamo,16강,1차전,2016-02-24,Silva,1,Manchester City,스페인
+Mancity-Dynamo,16강,1차전,2016-02-24,Toure,1,Manchester City,코트디부아르
+Real Madrid-Wolfsburg,8강,1차전,2016-04-06,Rodriguez,1,Wolfsburg,스위스
+Real Madrid-Wolfsburg,8강,1차전,2016-04-06,Arnold,1,Wolfsburg,독일
+Real Madrid-Wolfsburg,8강,2차전,2016-04-12,Ronaldo,1,Real Madrid,포르투갈
+Real Madrid-Wolfsburg,8강,2차전,2016-04-12,Ronaldo,1,Real Madrid,포르투갈
+Real Madrid-Wolfsburg,8강,2차전,2016-04-12,Ronaldo,1,Real Madrid,포르투갈
+Bayern-Benfica,8강,1차전,2016-04-05,Vidal,1,Bayern Munich,칠레
+Bayern-Benfica,8강,2차전,2016-04-13,Jimenez,1,Benfica,멕시코
+Bayern-Benfica,8강,2차전,2016-04-13,Talisca,1,Benfica,브라질
+Bayern-Benfica,8강,2차전,2016-04-13,Vidal,1,Bayern Munich,칠레
+Bayern-Benfica,8강,2차전,2016-04-13,Muller,1,Bayern Munich,독일
+Atletico-Barcelona,8강,1차전,2016-04-05,Suarez,1,Barcelona,우루과이
+Atletico-Barcelona,8강,1차전,2016-04-05,Suarez,1,Barcelona,우루과이
+Atletico-Barcelona,8강,1차전,2016-04-05,F. Torres,1,Atletico Madrid,스페인
+Atletico-Barcelona,8강,2차전,2016-04-13,Griezmann,1,Atletico Madrid,프랑스
+Atletico-Barcelona,8강,2차전,2016-04-13,Griezmann,1,Atletico Madrid,프랑스
+Mancity-PSG,8강,1차전,2016-04-06,Rabiot,1,Paris Saint-Germain,프랑스
+Mancity-PSG,8강,1차전,2016-04-06,Ibrahimovic,1,Paris Saint-Germain,스웨덴
+Mancity-PSG,8강,1차전,2016-04-06,De Bruyne,1,Manchester City,벨기에
+Mancity-PSG,8강,1차전,2016-04-06,Fernandinho,1,Manchester City,브라질
+Mancity-PSG,8강,2차전,2016-04-12,De Bruyne,1,Manchester City,벨기에
+Real Madrid-Mancity,4강,2차전,2016-05-04,Fernando(o.g),1,Manchester City,브라질
+Atletico-Bayern,4강,1차전,2016-04-27,Saul,1,Atletico Madrid,스페인
+Atletico-Bayern,4강,2차전,2016-05-03,Xavi Alonso,1,Bayern Munich,스페인
+Atletico-Bayern,4강,2차전,2016-05-03,Lewandowski,1,Bayern Munich,폴란드
+Atletico-Bayern,4강,2차전,2016-05-03,Griezmann,1,Atletico Madrid,프랑스
+Real Madrid-Atletico,결승,,2016-05-28,Ramos,1,Real Madrid,스페인
+Real Madrid-Atletico,결승,,2016-05-28,Carrasco,1,Atletico Madrid,벨기에
