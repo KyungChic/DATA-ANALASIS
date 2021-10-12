@@ -1,0 +1,90 @@
+# Slide 38
+
+#(1)
+# True = 1 / False = 0
+
+sum(state.x77[ , "Income"] > 4500) # 26개 
+state.name[state.x77[ , "Income"] > 4500]
+
+s_name<-rownames(state.x77)
+s_name[state.x77[ , "Income"] > 4500]
+colnames(state.x77)
+
+#(2)
+mean(state.x77[ , "Illiteracy"])
+
+v<-state.x77[ , "Illiteracy"]
+mean(v)
+v2<-v[state.x77[ , "Income"] > 4500]
+mean(v2)
+
+# Slide 62
+# (1)
+class(state.x77)
+
+#(2)
+apply(state.x77, 2, mean)
+
+#(3)
+#lapply(as.data.frame(state.x77), mean)
+
+df<-data.frame(state.x77)
+
+lapply(df, mean)
+sapply(df, mean)
+
+
+# Slide 64
+# (1)
+state.region
+table(state.region)
+
+#(2)
+state.df<-data.frame(state.x77, state.name, state.region)
+
+#(3)
+tapply(state.df$Income, state.df$state.region, mean)
+aggregate(Income ~ state.region, state.df, mean)
+
+
+# Slide 65
+# (1)(2)
+titanic<-read.csv(file="DataSet/titanic.csv") 
+str(titanic)
+
+#(3)
+
+table(titanic$pclass)
+
+sub<-subset(titanic, pclass == '1st')
+nrow(sub)
+mean(sub$survived)
+
+mean(titanic[titanic$pclass == '1st', 'survived'])
+
+#(4)
+tapply(titanic$survived, titanic$pclass, mean)
+aggregate(survived ~ pclass, titanic, mean)
+
+# Slide 66
+# (1)
+
+aggregate(sex ~ pclass, titanic, table)
+tapply(titanic$sex, titanic$pclass, table)
+table(titanic$sex, titanic$pclass)
+
+#(2) 성인의 비율 : 1등석 승객 중 20세 이상 성인의 비율 = 20세 이상 / 결측치 제거한 후 전체 수 
+length(titanic$age)
+sum(is.na(titanic$age))
+
+sub1<-subset(titanic, age >=20 & pclass == '1st')
+any(is.na(sub1$age))
+
+sub2<-subset(titanic, !is.na(age) & pclass == '1st') # 결측치 제거한 후 전체 데이터  
+
+nrow(sub1)/nrow(sub2)
+
+#(3)
+titanic$AgeGroup<-ifelse(titanic$age >=18, "Adult", "Child")
+aggregate(survived ~ AgeGroup + pclass + sex, titanic, mean)
+
