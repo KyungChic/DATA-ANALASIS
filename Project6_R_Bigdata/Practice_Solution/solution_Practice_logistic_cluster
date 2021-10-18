@@ -1,0 +1,837 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+# Slide 192-201 
+library(arules)
+data("AdultUCI")
+?AdultUCI # 데이터 설명 
+
+
+## ----------------------------------------
+
+str(AdultUCI)
+
+## ----------------------------------------
+
+var_names<-names(AdultUCI)
+var_names
+adult0<-AdultUCI # 자료 복사 
+names(adult0)<-gsub("-", "_", var_names)
+adult0$education_num[1:5]
+
+
+## ----------------------------------------
+
+print(paste('결측치 갯수=', sum(is.na(adult0$income))))
+
+library(dplyr)
+adult<-adult0 %>% filter(!is.na(income))
+print(paste('결측치 제거 후 관측치 수 : ', nrow(adult)))
+
+
+## ----------------------------------------
+
+library(ggplot2)
+
+adult %>% ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5)
+
+
+## ----------------------------------------
+
+adult %>% filter(race %in% c('Black', 'White')) %>% 
+    ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5) +
+    ylim(0, 0.1) +
+    facet_grid(race ~ sex)
+
+
+## ----------------------------------------
+
+adult %>% ggplot(aes(education_num, fill=income)) +
+    geom_bar()
+
+
+## ----------------------------------------
+
+adult$income<-factor(adult$income, labels=c(0,1))
+adult<-na.omit(adult)
+dim(adult)
+set.seed(1234)
+indexes <- sample(1:nrow(adult), size=0.6*nrow(adult))
+train.dat <- adult[indexes,]
+test.dat <- adult[-indexes,]
+test.class.var<-test.dat[ ,"income"]
+test.feature.vars<-test.dat %>% select(-income)
+
+
+## ----------------------------------------
+
+model1<-glm(income ~ . - education_num, data=train.dat, family="binomial")
+summary(model1)
+
+
+## ----------------------------------------
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+model <- train(income ~ . - education_num , data=train.dat, method="glm", na.action = na.omit)
+importance <- varImp(model, scale=FALSE)
+importance
+
+
+## ----------------------------------------
+
+model2<-glm(income ~ capital_gain + hours_per_week + capital_loss + age + relationship + workclass + marital_status, data=train.dat, family="binomial")
+
+summary(model2)
+
+
+## ----------------------------------------
+
+pred<-predict(model2, test.dat, type="response") 
+pred<-factor(round(pred))
+confusionMatrix(data=pred, reference=test.class.var, positive='1')
+
+
+## ----------------------------------------
+
+library(ROCR)
+pred.values <- predict(model2, test.feature.vars, type="response")
+predictions<-prediction(pred.values, test.class.var)
+
+plot.roc.curve <- function(predictions, title.text){
+    perf <- performance(predictions, "tpr", "fpr")
+    plot(perf,col="black",lty=1, lwd=2, main=title.text, cex.main=0.6, cex.lab=0.8,xaxs="i", yaxs="i")
+    abline(0,1, col="red")
+    auc <- performance(predictions,"auc")
+    auc <- unlist(slot(auc, "y.values"))
+    auc <- round(auc,2)
+    legend(0.4,0.4,legend=c(paste0("AUC: ",auc)),cex=0.6,bty = "n",box.col = "white")
+}
+
+plot.roc.curve(predictions, "LR ROC Curve")
+
+## ----------------------------------------
+## ----------------------------------------
+
+sns0<-read.csv("DataSet/snsdata.csv")
+#names(sns0)
+#dim(sns0)
+
+
+sns0$gender<-factor(sns0$gender)
+
+summary(sns0[1:10])
+summary(sns0[11:20])
+summary(sns0[21:30])
+summary(sns0[31:40])
+
+sum(is.na(sns0$gender))
+
+sns<-sns0 %>% filter(!is.na(gender))
+
+summary(sns$age)
+
+sns<- sns %>% mutate(newage = ifelse( sns$age <13 | sns$age >20, NA, sns$age)) %>% 
+    mutate(newage2 = ifelse(is.na(newage), mean(newage, na.rm=T), newage)) 
+
+# sns$newage<-ifelse( sns$age <13 | sns$age >20, NA, sns$age)
+# m<-mean(sns$newage, na.rm=T)
+# sns$newage[is.na(sns$newage)]<-m
+
+interests<-sns[ , 5:40]
+names(interests)
+interests_z<-as.data.frame(scale(interests))
+mean(interests_z$swimming)
+sd(interests_z$swimming)
+
+c1<-kmeans(interests_z, 5)
+c1$size 
+
+c1$centers 
+# 일반적 구분 : princess / criminals / music /  athletes / brain 
+
+sns$cluster<-c1$cluster 
+
+aggregate(gender~ cluster, sns, table)
+tapply(sns$friends, sns$cluster, mean)
+
+factoextra::fviz_cluster(c1, interests_z)
+
+
+
+
+
+
+
+=======
+
+# Slide 192-201 
+library(arules)
+data("AdultUCI")
+?AdultUCI # 데이터 설명 
+
+
+## ----------------------------------------
+
+str(AdultUCI)
+
+## ----------------------------------------
+
+var_names<-names(AdultUCI)
+var_names
+adult0<-AdultUCI # 자료 복사 
+names(adult0)<-gsub("-", "_", var_names)
+adult0$education_num[1:5]
+
+
+## ----------------------------------------
+
+print(paste('결측치 갯수=', sum(is.na(adult0$income))))
+
+library(dplyr)
+adult<-adult0 %>% filter(!is.na(income))
+print(paste('결측치 제거 후 관측치 수 : ', nrow(adult)))
+
+
+## ----------------------------------------
+
+library(ggplot2)
+
+adult %>% ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5)
+
+
+## ----------------------------------------
+
+adult %>% filter(race %in% c('Black', 'White')) %>% 
+    ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5) +
+    ylim(0, 0.1) +
+    facet_grid(race ~ sex)
+
+
+## ----------------------------------------
+
+adult %>% ggplot(aes(education_num, fill=income)) +
+    geom_bar()
+
+
+## ----------------------------------------
+
+adult$income<-factor(adult$income, labels=c(0,1))
+adult<-na.omit(adult)
+dim(adult)
+set.seed(1234)
+indexes <- sample(1:nrow(adult), size=0.6*nrow(adult))
+train.dat <- adult[indexes,]
+test.dat <- adult[-indexes,]
+test.class.var<-test.dat[ ,"income"]
+test.feature.vars<-test.dat %>% select(-income)
+
+
+## ----------------------------------------
+
+model1<-glm(income ~ . - education_num, data=train.dat, family="binomial")
+summary(model1)
+
+
+## ----------------------------------------
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+model <- train(income ~ . - education_num , data=train.dat, method="glm", na.action = na.omit)
+importance <- varImp(model, scale=FALSE)
+importance
+
+
+## ----------------------------------------
+
+model2<-glm(income ~ capital_gain + hours_per_week + capital_loss + age + relationship + workclass + marital_status, data=train.dat, family="binomial")
+
+summary(model2)
+
+
+## ----------------------------------------
+
+pred<-predict(model2, test.dat, type="response") 
+pred<-factor(round(pred))
+confusionMatrix(data=pred, reference=test.class.var, positive='1')
+
+
+## ----------------------------------------
+
+library(ROCR)
+pred.values <- predict(model2, test.feature.vars, type="response")
+predictions<-prediction(pred.values, test.class.var)
+
+plot.roc.curve <- function(predictions, title.text){
+    perf <- performance(predictions, "tpr", "fpr")
+    plot(perf,col="black",lty=1, lwd=2, main=title.text, cex.main=0.6, cex.lab=0.8,xaxs="i", yaxs="i")
+    abline(0,1, col="red")
+    auc <- performance(predictions,"auc")
+    auc <- unlist(slot(auc, "y.values"))
+    auc <- round(auc,2)
+    legend(0.4,0.4,legend=c(paste0("AUC: ",auc)),cex=0.6,bty = "n",box.col = "white")
+}
+
+plot.roc.curve(predictions, "LR ROC Curve")
+
+## ----------------------------------------
+## ----------------------------------------
+
+sns0<-read.csv("DataSet/snsdata.csv")
+#names(sns0)
+#dim(sns0)
+
+
+sns0$gender<-factor(sns0$gender)
+
+summary(sns0[1:10])
+summary(sns0[11:20])
+summary(sns0[21:30])
+summary(sns0[31:40])
+
+sum(is.na(sns0$gender))
+
+sns<-sns0 %>% filter(!is.na(gender))
+
+summary(sns$age)
+
+sns<- sns %>% mutate(newage = ifelse( sns$age <13 | sns$age >20, NA, sns$age)) %>% 
+    mutate(newage2 = ifelse(is.na(newage), mean(newage, na.rm=T), newage)) 
+
+# sns$newage<-ifelse( sns$age <13 | sns$age >20, NA, sns$age)
+# m<-mean(sns$newage, na.rm=T)
+# sns$newage[is.na(sns$newage)]<-m
+
+interests<-sns[ , 5:40]
+names(interests)
+interests_z<-as.data.frame(scale(interests))
+mean(interests_z$swimming)
+sd(interests_z$swimming)
+
+c1<-kmeans(interests_z, 5)
+c1$size 
+
+c1$centers 
+# 일반적 구분 : princess / criminals / music /  athletes / brain 
+
+sns$cluster<-c1$cluster 
+
+aggregate(gender~ cluster, sns, table)
+tapply(sns$friends, sns$cluster, mean)
+
+factoextra::fviz_cluster(c1, interests_z)
+
+
+
+
+
+
+
+>>>>>>> 5c5a7e65ae3a3edf20e3212427f4d26207c4addc
+=======
+
+# Slide 192-201 
+library(arules)
+data("AdultUCI")
+?AdultUCI # 데이터 설명 
+
+
+## ----------------------------------------
+
+str(AdultUCI)
+
+## ----------------------------------------
+
+var_names<-names(AdultUCI)
+var_names
+adult0<-AdultUCI # 자료 복사 
+names(adult0)<-gsub("-", "_", var_names)
+adult0$education_num[1:5]
+
+
+## ----------------------------------------
+
+print(paste('결측치 갯수=', sum(is.na(adult0$income))))
+
+library(dplyr)
+adult<-adult0 %>% filter(!is.na(income))
+print(paste('결측치 제거 후 관측치 수 : ', nrow(adult)))
+
+
+## ----------------------------------------
+
+library(ggplot2)
+
+adult %>% ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5)
+
+
+## ----------------------------------------
+
+adult %>% filter(race %in% c('Black', 'White')) %>% 
+    ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5) +
+    ylim(0, 0.1) +
+    facet_grid(race ~ sex)
+
+
+## ----------------------------------------
+
+adult %>% ggplot(aes(education_num, fill=income)) +
+    geom_bar()
+
+
+## ----------------------------------------
+
+adult$income<-factor(adult$income, labels=c(0,1))
+adult<-na.omit(adult)
+dim(adult)
+set.seed(1234)
+indexes <- sample(1:nrow(adult), size=0.6*nrow(adult))
+train.dat <- adult[indexes,]
+test.dat <- adult[-indexes,]
+test.class.var<-test.dat[ ,"income"]
+test.feature.vars<-test.dat %>% select(-income)
+
+
+## ----------------------------------------
+
+model1<-glm(income ~ . - education_num, data=train.dat, family="binomial")
+summary(model1)
+
+
+## ----------------------------------------
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+model <- train(income ~ . - education_num , data=train.dat, method="glm", na.action = na.omit)
+importance <- varImp(model, scale=FALSE)
+importance
+
+
+## ----------------------------------------
+
+model2<-glm(income ~ capital_gain + hours_per_week + capital_loss + age + relationship + workclass + marital_status, data=train.dat, family="binomial")
+
+summary(model2)
+
+
+## ----------------------------------------
+
+pred<-predict(model2, test.dat, type="response") 
+pred<-factor(round(pred))
+confusionMatrix(data=pred, reference=test.class.var, positive='1')
+
+
+## ----------------------------------------
+
+library(ROCR)
+pred.values <- predict(model2, test.feature.vars, type="response")
+predictions<-prediction(pred.values, test.class.var)
+
+plot.roc.curve <- function(predictions, title.text){
+    perf <- performance(predictions, "tpr", "fpr")
+    plot(perf,col="black",lty=1, lwd=2, main=title.text, cex.main=0.6, cex.lab=0.8,xaxs="i", yaxs="i")
+    abline(0,1, col="red")
+    auc <- performance(predictions,"auc")
+    auc <- unlist(slot(auc, "y.values"))
+    auc <- round(auc,2)
+    legend(0.4,0.4,legend=c(paste0("AUC: ",auc)),cex=0.6,bty = "n",box.col = "white")
+}
+
+plot.roc.curve(predictions, "LR ROC Curve")
+
+## ----------------------------------------
+## ----------------------------------------
+
+sns0<-read.csv("DataSet/snsdata.csv")
+#names(sns0)
+#dim(sns0)
+
+
+sns0$gender<-factor(sns0$gender)
+
+summary(sns0[1:10])
+summary(sns0[11:20])
+summary(sns0[21:30])
+summary(sns0[31:40])
+
+sum(is.na(sns0$gender))
+
+sns<-sns0 %>% filter(!is.na(gender))
+
+summary(sns$age)
+
+sns<- sns %>% mutate(newage = ifelse( sns$age <13 | sns$age >20, NA, sns$age)) %>% 
+    mutate(newage2 = ifelse(is.na(newage), mean(newage, na.rm=T), newage)) 
+
+# sns$newage<-ifelse( sns$age <13 | sns$age >20, NA, sns$age)
+# m<-mean(sns$newage, na.rm=T)
+# sns$newage[is.na(sns$newage)]<-m
+
+interests<-sns[ , 5:40]
+names(interests)
+interests_z<-as.data.frame(scale(interests))
+mean(interests_z$swimming)
+sd(interests_z$swimming)
+
+c1<-kmeans(interests_z, 5)
+c1$size 
+
+c1$centers 
+# 일반적 구분 : princess / criminals / music /  athletes / brain 
+
+sns$cluster<-c1$cluster 
+
+aggregate(gender~ cluster, sns, table)
+tapply(sns$friends, sns$cluster, mean)
+
+factoextra::fviz_cluster(c1, interests_z)
+
+
+
+
+
+
+
+>>>>>>> 5c5a7e65ae3a3edf20e3212427f4d26207c4addc
+=======
+
+# Slide 192-201 
+library(arules)
+data("AdultUCI")
+?AdultUCI # 데이터 설명 
+
+
+## ----------------------------------------
+
+str(AdultUCI)
+
+## ----------------------------------------
+
+var_names<-names(AdultUCI)
+var_names
+adult0<-AdultUCI # 자료 복사 
+names(adult0)<-gsub("-", "_", var_names)
+adult0$education_num[1:5]
+
+
+## ----------------------------------------
+
+print(paste('결측치 갯수=', sum(is.na(adult0$income))))
+
+library(dplyr)
+adult<-adult0 %>% filter(!is.na(income))
+print(paste('결측치 제거 후 관측치 수 : ', nrow(adult)))
+
+
+## ----------------------------------------
+
+library(ggplot2)
+
+adult %>% ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5)
+
+
+## ----------------------------------------
+
+adult %>% filter(race %in% c('Black', 'White')) %>% 
+    ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5) +
+    ylim(0, 0.1) +
+    facet_grid(race ~ sex)
+
+
+## ----------------------------------------
+
+adult %>% ggplot(aes(education_num, fill=income)) +
+    geom_bar()
+
+
+## ----------------------------------------
+
+adult$income<-factor(adult$income, labels=c(0,1))
+adult<-na.omit(adult)
+dim(adult)
+set.seed(1234)
+indexes <- sample(1:nrow(adult), size=0.6*nrow(adult))
+train.dat <- adult[indexes,]
+test.dat <- adult[-indexes,]
+test.class.var<-test.dat[ ,"income"]
+test.feature.vars<-test.dat %>% select(-income)
+
+
+## ----------------------------------------
+
+model1<-glm(income ~ . - education_num, data=train.dat, family="binomial")
+summary(model1)
+
+
+## ----------------------------------------
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+model <- train(income ~ . - education_num , data=train.dat, method="glm", na.action = na.omit)
+importance <- varImp(model, scale=FALSE)
+importance
+
+
+## ----------------------------------------
+
+model2<-glm(income ~ capital_gain + hours_per_week + capital_loss + age + relationship + workclass + marital_status, data=train.dat, family="binomial")
+
+summary(model2)
+
+
+## ----------------------------------------
+
+pred<-predict(model2, test.dat, type="response") 
+pred<-factor(round(pred))
+confusionMatrix(data=pred, reference=test.class.var, positive='1')
+
+
+## ----------------------------------------
+
+library(ROCR)
+pred.values <- predict(model2, test.feature.vars, type="response")
+predictions<-prediction(pred.values, test.class.var)
+
+plot.roc.curve <- function(predictions, title.text){
+    perf <- performance(predictions, "tpr", "fpr")
+    plot(perf,col="black",lty=1, lwd=2, main=title.text, cex.main=0.6, cex.lab=0.8,xaxs="i", yaxs="i")
+    abline(0,1, col="red")
+    auc <- performance(predictions,"auc")
+    auc <- unlist(slot(auc, "y.values"))
+    auc <- round(auc,2)
+    legend(0.4,0.4,legend=c(paste0("AUC: ",auc)),cex=0.6,bty = "n",box.col = "white")
+}
+
+plot.roc.curve(predictions, "LR ROC Curve")
+
+## ----------------------------------------
+## ----------------------------------------
+
+sns0<-read.csv("DataSet/snsdata.csv")
+#names(sns0)
+#dim(sns0)
+
+
+sns0$gender<-factor(sns0$gender)
+
+summary(sns0[1:10])
+summary(sns0[11:20])
+summary(sns0[21:30])
+summary(sns0[31:40])
+
+sum(is.na(sns0$gender))
+
+sns<-sns0 %>% filter(!is.na(gender))
+
+summary(sns$age)
+
+sns<- sns %>% mutate(newage = ifelse( sns$age <13 | sns$age >20, NA, sns$age)) %>% 
+    mutate(newage2 = ifelse(is.na(newage), mean(newage, na.rm=T), newage)) 
+
+# sns$newage<-ifelse( sns$age <13 | sns$age >20, NA, sns$age)
+# m<-mean(sns$newage, na.rm=T)
+# sns$newage[is.na(sns$newage)]<-m
+
+interests<-sns[ , 5:40]
+names(interests)
+interests_z<-as.data.frame(scale(interests))
+mean(interests_z$swimming)
+sd(interests_z$swimming)
+
+c1<-kmeans(interests_z, 5)
+c1$size 
+
+c1$centers 
+# 일반적 구분 : princess / criminals / music /  athletes / brain 
+
+sns$cluster<-c1$cluster 
+
+aggregate(gender~ cluster, sns, table)
+tapply(sns$friends, sns$cluster, mean)
+
+factoextra::fviz_cluster(c1, interests_z)
+
+
+
+
+
+
+
+>>>>>>> 5c5a7e65ae3a3edf20e3212427f4d26207c4addc
+=======
+
+# Slide 192-201 
+library(arules)
+data("AdultUCI")
+?AdultUCI # 데이터 설명 
+
+
+## ----------------------------------------
+
+str(AdultUCI)
+
+## ----------------------------------------
+
+var_names<-names(AdultUCI)
+var_names
+adult0<-AdultUCI # 자료 복사 
+names(adult0)<-gsub("-", "_", var_names)
+adult0$education_num[1:5]
+
+
+## ----------------------------------------
+
+print(paste('결측치 갯수=', sum(is.na(adult0$income))))
+
+library(dplyr)
+adult<-adult0 %>% filter(!is.na(income))
+print(paste('결측치 제거 후 관측치 수 : ', nrow(adult)))
+
+
+## ----------------------------------------
+
+library(ggplot2)
+
+adult %>% ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5)
+
+
+## ----------------------------------------
+
+adult %>% filter(race %in% c('Black', 'White')) %>% 
+    ggplot(aes(age, fill=income)) +
+    geom_density(alpha=0.5) +
+    ylim(0, 0.1) +
+    facet_grid(race ~ sex)
+
+
+## ----------------------------------------
+
+adult %>% ggplot(aes(education_num, fill=income)) +
+    geom_bar()
+
+
+## ----------------------------------------
+
+adult$income<-factor(adult$income, labels=c(0,1))
+adult<-na.omit(adult)
+dim(adult)
+set.seed(1234)
+indexes <- sample(1:nrow(adult), size=0.6*nrow(adult))
+train.dat <- adult[indexes,]
+test.dat <- adult[-indexes,]
+test.class.var<-test.dat[ ,"income"]
+test.feature.vars<-test.dat %>% select(-income)
+
+
+## ----------------------------------------
+
+model1<-glm(income ~ . - education_num, data=train.dat, family="binomial")
+summary(model1)
+
+
+## ----------------------------------------
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+model <- train(income ~ . - education_num , data=train.dat, method="glm", na.action = na.omit)
+importance <- varImp(model, scale=FALSE)
+importance
+
+
+## ----------------------------------------
+
+model2<-glm(income ~ capital_gain + hours_per_week + capital_loss + age + relationship + workclass + marital_status, data=train.dat, family="binomial")
+
+summary(model2)
+
+
+## ----------------------------------------
+
+pred<-predict(model2, test.dat, type="response") 
+pred<-factor(round(pred))
+confusionMatrix(data=pred, reference=test.class.var, positive='1')
+
+
+## ----------------------------------------
+
+library(ROCR)
+pred.values <- predict(model2, test.feature.vars, type="response")
+predictions<-prediction(pred.values, test.class.var)
+
+plot.roc.curve <- function(predictions, title.text){
+    perf <- performance(predictions, "tpr", "fpr")
+    plot(perf,col="black",lty=1, lwd=2, main=title.text, cex.main=0.6, cex.lab=0.8,xaxs="i", yaxs="i")
+    abline(0,1, col="red")
+    auc <- performance(predictions,"auc")
+    auc <- unlist(slot(auc, "y.values"))
+    auc <- round(auc,2)
+    legend(0.4,0.4,legend=c(paste0("AUC: ",auc)),cex=0.6,bty = "n",box.col = "white")
+}
+
+plot.roc.curve(predictions, "LR ROC Curve")
+
+## ----------------------------------------
+## ----------------------------------------
+
+sns0<-read.csv("DataSet/snsdata.csv")
+#names(sns0)
+#dim(sns0)
+
+
+sns0$gender<-factor(sns0$gender)
+
+summary(sns0[1:10])
+summary(sns0[11:20])
+summary(sns0[21:30])
+summary(sns0[31:40])
+
+sum(is.na(sns0$gender))
+
+sns<-sns0 %>% filter(!is.na(gender))
+
+summary(sns$age)
+
+sns<- sns %>% mutate(newage = ifelse( sns$age <13 | sns$age >20, NA, sns$age)) %>% 
+    mutate(newage2 = ifelse(is.na(newage), mean(newage, na.rm=T), newage)) 
+
+# sns$newage<-ifelse( sns$age <13 | sns$age >20, NA, sns$age)
+# m<-mean(sns$newage, na.rm=T)
+# sns$newage[is.na(sns$newage)]<-m
+
+interests<-sns[ , 5:40]
+names(interests)
+interests_z<-as.data.frame(scale(interests))
+mean(interests_z$swimming)
+sd(interests_z$swimming)
+
+c1<-kmeans(interests_z, 5)
+c1$size 
+
+c1$centers 
+# 일반적 구분 : princess / criminals / music /  athletes / brain 
+
+sns$cluster<-c1$cluster 
+
+aggregate(gender~ cluster, sns, table)
+tapply(sns$friends, sns$cluster, mean)
+
+factoextra::fviz_cluster(c1, interests_z)
+
+
+
+
+
+
+
+>>>>>>> 5c5a7e65ae3a3edf20e3212427f4d26207c4addc
