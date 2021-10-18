@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Slide 91
 
 titanic<-read.csv(file="DataSet/titanic.csv") 
@@ -96,6 +97,102 @@ left_join(hospital, tb, by="hosp_id")
 
 
 
+=======
+# Slide 91
+
+titanic<-read.csv(file="DataSet/titanic.csv") 
+str(titanic)
+
+# (1)
+
+titanic %>% filter(pclass == '1st') %>% summarize(survival = mean(survived))
+
+# (2)
+titanic %>% group_by(pclass) %>% summarize(survival = mean(survived))
+
+# (3)
+
+n1<-titanic %>% filter(age >=20, pclass == '1st') %>% summarize(n = n())
+n2<-titanic %>% filter(!is.na(age), pclass == '1st') %>% summarize(n = n())
+
+n1/n2
+
+#(4)
+
+titanic %>% mutate(AgeGroup = ifelse(age >=18, 'Adult', 'Child')) %>% 
+    group_by(sex, pclass, AgeGroup) %>% 
+    summarize(survival = mean(survived))
+
+titanic %>% mutate(AgeGroup = ifelse(age >=18, 'Adult', 'Child')) %>% 
+    filter(!is.na(age)) %>% 
+    group_by(sex, pclass, AgeGroup) %>% 
+    summarize(survival = mean(survived))
+
+
+
+
+## -------------------------------------------------------
+# Slide 100~ 
+
+
+admissions<-read.csv("DataSet/admissions.csv")
+str(admissions)
+
+# admissions<-admissions %>% mutate(ADMDATE2 = as.Date(admissions$ADMDATE) )
+
+admissions$ADMDATE2<-as.Date(admissions$ADMDATE)
+head(admissions, n=3)
+
+
+## -------------------------------------------------------
+
+admissions %>% filter(HOSP ==3) %>% summarize(freq=n())
+
+## -------------------------------------------------------
+
+admissions %>% 
+    mutate(Group = ifelse(substr(PRIMDX, 1, 3) == '410', 'MI', 
+                          ifelse(substr(PRIMDX, 1, 3) =='428','CHF', 'Others'))) %>% 
+    group_by(Group) %>% 
+    summarize(n=n())
+
+## -----------------------------------------------------
+
+admissions %>% mutate(DISDATE2= as.Date(DISDATE), Period = DISDATE2 - ADMDATE2 + 1) %>% 
+    filter(Period >=14) %>% select(PT_ID, ADMDATE, DISDATE, Period, HOSP) 
+
+
+## -------------------------------------------------------
+admissions %>% mutate(DISDATE2= as.Date(DISDATE), Period = DISDATE2 - ADMDATE2 + 1) %>% 
+    group_by(PT_ID) %>% summarize(nstay=n(), min_stay=min(Period), max_stay=max(Period))
+
+
+## ---------------------------------------
+hospital<-read.csv("DataSet/hospital.csv")
+
+admissions %>% filter(HOSP %in% c(2,4)) %>% select(PT_ID, ADMDATE, DISDATE, HOSP) 
+
+
+hosp_list<-hospital %>% filter(hospname %in% c('Our Lady of Charity', 'Community Hospital'))
+admissions %>% filter(HOSP %in% hosp_list$hosp_id) %>% select(PT_ID, ADMDATE, DISDATE, HOSP) 
+
+
+## ---------------------------------------
+
+table(admissions$HOSP)
+table(hospital$hosp_id)
+
+tb<-admissions %>% rename(hosp_id = HOSP) %>% group_by(hosp_id) %>% summarize(Freq=n()) 
+
+left_join(hospital, tb, by="hosp_id")
+
+
+
+
+
+
+
+>>>>>>> 5c5a7e65ae3a3edf20e3212427f4d26207c4addc
 =======
 # Slide 91
 
