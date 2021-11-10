@@ -14,7 +14,7 @@
 
 [Project7 / ing] O'REILLY 출판사의 <Practical Statistic for Data Scientists> 도서를 통한 공부 중
 
-[Project8 / ing] 금융연수원 강의 <우리은행 금융인을 위한 통계와 데이터분석 입문[2021-2기]> 강의 수강 중
+[Project8 ] 금융연수원 강의 <우리은행 금융인을 위한 통계와 데이터분석 입문[2021-2기]> 강의 수강 완료
 
 
 
