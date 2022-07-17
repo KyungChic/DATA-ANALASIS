@@ -16,5 +16,10 @@
 
 [Project8 ] 금융연수원 강의 <우리은행 금융인을 위한 통계와 데이터분석 입문[2021-2기]> 강의 수강 완료
 
+[Project9] 빅데이터 분석기사 취득
 
+[Project10 / ing] SQLD 취득 준비
 
+[Project11] 조지아텍 MGT6203_DataAnalyticsforBusiness 과정 메인 과제인 팀프로젝트 진행. 코로나 발생 데이터, healthy lifestyle city 데이터, worldbank 데이터 등 변수간의 상관관계 분석
+
+[Project12] 숭실대-우리은행 산학협력 교육 프로젝트. 잡플래닛 평점데이터와 국민연금 데이터를 통한 기업문화 분석 프로젝트
